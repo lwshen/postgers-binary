@@ -1,0 +1,27 @@
+name: Build Ubuntu
+on: [push, pull_request]
+jobs:
+  ubuntu:
+    runs-on: "${{ matrix.os }}"
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - postgres: 16.4
+            os: ubuntu-24.04
+          - postgres: 15.8
+            os: ubuntu-22.04
+          - postgres: 14.13
+            os: ubuntu-22.04
+          - postgres: 13.16
+            os: ubuntu-20.04
+          - postgres: 12.20
+            os: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build PostgreSQL
+        run: sudo bash build-ubuntu.sh -v ${{ matrix.postgres }}
+      - name: List build files
+        run: ls /usr/local/pg-build
+      - name: List dist files
+        run: ls /usr/local/pg-dist
