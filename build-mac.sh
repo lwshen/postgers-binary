@@ -26,6 +26,7 @@ mkdir -p /opt/local/postgresql
 tar -xf postgresql.tar.bz2 -C /opt/local/postgresql --strip-components 1
 cd /opt/local/postgresql
 ./configure \
+    CFLAGS="-Os" \
     --prefix=/usr/local/pg-build \
     --without-icu \
     --without-readline \
