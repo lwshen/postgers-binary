@@ -27,6 +27,7 @@ tar -xf postgresql.tar.bz2 -C /opt/local/postgresql --strip-components 1
 cd /opt/local/postgresql
 ./configure \
     CFLAGS="-Os" \
+    LDFLAGS="-static" \
     --prefix=/usr/local/pg-build \
     --without-icu \
     --without-readline \
