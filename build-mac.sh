@@ -22,13 +22,12 @@ fi
 echo "Starting building postgres binaries"
 
 wget -O postgresql.tar.bz2 "https://ftp.postgresql.org/pub/source/v$PG_VERSION/postgresql-$PG_VERSION.tar.bz2"
-mkdir -p /opt/local/postgresql
-tar -xf postgresql.tar.bz2 -C /opt/local/postgresql --strip-components 1
-cd /opt/local/postgresql
+mkdir -p /Users/runner/local/postgresql
+tar -xf postgresql.tar.bz2 -C /Users/runner/local/postgresql --strip-components 1
+cd /Users/runner/local/postgresql
 ./configure \
     CFLAGS="-Os" \
-    LDFLAGS="-static" \
-    --prefix=/usr/local/pg-build \
+    --prefix=/Users/runner/build/pg-build \
     --without-icu \
     --without-readline \
     --without-zlib
@@ -36,8 +35,8 @@ make -j$(sysctl -n hw.physicalcpu) world
 make install-world
 make -C contrib install
 
-mkdir -p /opt/local/pgvector
-curl -sL "https://github.com/pgvector/pgvector/archive/refs/tags/v$PGVECTOR_VERSION.tar.gz" | tar -xzf - -C /opt/local/pgvector --strip-components 1
-cd /opt/local/pgvector
+mkdir -p /Users/runner/local/pgvector
+curl -sL "https://github.com/pgvector/pgvector/archive/refs/tags/v$PGVECTOR_VERSION.tar.gz" | tar -xzf - -C /Users/runner/local/pgvector --strip-components 1
+cd /Users/runner/local/pgvector
 make -j$(sysctl -n hw.physicalcpu) OPTFLAGS=""
-PG_CONFIG=/usr/local/pg-build/bin/pg_config make install
+PG_CONFIG=/Users/runner/build/pg-build/bin/pg_config make install

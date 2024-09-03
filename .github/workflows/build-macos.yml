@@ -14,8 +14,8 @@ jobs:
         run: |
           echo "ARCHITECTURE=$(uname -m)" >> $GITHUB_ENV
       - name: Build PostgreSQL
-        run: sudo bash build-mac.sh -v ${{ matrix.postgres }}
+        run: bash build-mac.sh -v ${{ matrix.postgres }}
       - uses: actions/upload-artifact@v4
         with:
           name: postgres-${{ matrix.postgres }}-darwin-${{ env.ARCHITECTURE }}
-          path: /usr/local/pg-build
+          path: /Users/runner/build/pg-build

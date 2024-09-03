@@ -43,7 +43,9 @@ mkdir -p /usr/src/postgresql
 tar -xf postgresql.tar.bz2 -C /usr/src/postgresql --strip-components 1
 cd /usr/src/postgresql
 ./configure \
+    CFLAGS="-Os" \
     --prefix=/usr/local/pg-build \
+    --without-icu \
     --without-readline \
     --without-zlib
 make -j$(nproc) world
