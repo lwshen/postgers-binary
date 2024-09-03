@@ -31,9 +31,8 @@ cd /Users/runner/local/postgresql
     --without-icu \
     --without-readline \
     --without-zlib
-make -j$(sysctl -n hw.physicalcpu) world
-make install-world
-make -C contrib install
+make -j
+make install
 
 mkdir -p /Users/runner/local/pgvector
 curl -sL "https://github.com/pgvector/pgvector/archive/refs/tags/v$PGVECTOR_VERSION.tar.gz" | tar -xzf - -C /Users/runner/local/pgvector --strip-components 1
