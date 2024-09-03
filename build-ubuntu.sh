@@ -46,22 +46,21 @@ cd /usr/src/postgresql
     CFLAGS="-Os" \
     --prefix=/usr/local/pg-build \
     --without-icu \
-    --without-readline \
-    --without-zlib
-make -j$(nproc) world
-make install-world
-make -C contrib install
+    --without-readline
+make -j
+make install
 
-mkdir -p /usr/include/postgresql/internal/
-cp -r /usr/src/postgresql/src/include/. /usr/include/postgresql/internal
-ls /usr/include/postgresql/internal
-find / -name "pg_config_os.h" -print
+# mkdir -p /usr/include/postgresql/internal/
+# cp -r /usr/src/postgresql/src/include/. /usr/include/postgresql/internal
+# ls /usr/include/postgresql/internal
+# find / -name "pg_config_os.h" -print
 
 mkdir -p /usr/src/pgvector
 curl -sL "https://github.com/pgvector/pgvector/archive/refs/tags/v$PGVECTOR_VERSION.tar.gz" | tar -xzf - -C /usr/src/pgvector --strip-components 1
 cd /usr/src/pgvector
-make -j$(nproc)
-PG_CONFIG=/usr/local/pg-build/bin/pg_config make install
+export PG_CONFIG=/usr/local/pg-build/bin/pg_config
+make -j
+make install
 
 cd /usr/local/pg-build \
 cp /usr/lib/libossp-uuid.so.16 ./lib || cp /usr/lib/*/libossp-uuid.so.16 ./lib
