@@ -19,10 +19,11 @@ jobs:
             os: ubuntu-20.04
     steps:
       - uses: actions/checkout@v4
+      - name: Set environment variables
+        run: |
+          echo "ARCHITECTURE=$(uname -m)" >> $GITHUB_ENV
       - name: Build PostgreSQL
         run: sudo bash build-ubuntu.sh -v ${{ matrix.postgres }}
-      - name: List build files
-        run: ls /usr/local/pg-build
       - uses: actions/upload-artifact@v4
         with:
           name: postgres-${{ matrix.postgres }}-linux-${{ env.ARCHITECTURE }}
