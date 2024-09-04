@@ -50,11 +50,6 @@ cd /usr/src/postgresql
 make -j
 make install
 
-# mkdir -p /usr/include/postgresql/internal/
-# cp -r /usr/src/postgresql/src/include/. /usr/include/postgresql/internal
-# ls /usr/include/postgresql/internal
-# find / -name "pg_config_os.h" -print
-
 mkdir -p /usr/src/pgvector
 curl -sL "https://github.com/pgvector/pgvector/archive/refs/tags/v$PGVECTOR_VERSION.tar.gz" | tar -xzf - -C /usr/src/pgvector --strip-components 1
 cd /usr/src/pgvector
