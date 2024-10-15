@@ -29,11 +29,9 @@ cd /Users/runner/local/postgresql
     CFLAGS="-Os" \
     --prefix=/Users/runner/build/pg-build \
     --without-icu \
-    --without-readline \
-    --without-zlib
+    --without-readline
 make -j
 make install
-make -C contrib install
 
 mkdir -p /Users/runner/local/pgvector
 curl -sL "https://github.com/pgvector/pgvector/archive/refs/tags/v$PGVECTOR_VERSION.tar.gz" | tar -xzf - -C /Users/runner/local/pgvector --strip-components 1
