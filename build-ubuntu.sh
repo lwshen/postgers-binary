@@ -38,6 +38,16 @@ apt-get update && apt-get install -y --no-install-recommends \
     make \
     curl
 
+wget -O patchelf.tar.gz "https://nixos.org/releases/patchelf/patchelf-0.9/patchelf-0.9.tar.gz"
+mkdir -p /usr/src/patchelf
+tar -xf patchelf.tar.gz -C /usr/src/patchelf --strip-components 1
+cd /usr/src/patchelf
+wget -O config.guess "https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=b8ee5f79949d1d40e8820a774d813660e1be52d3"
+wget -O config.sub "https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=b8ee5f79949d1d40e8820a774d813660e1be52d3"
+./configure --prefix=/usr/local
+make -j$(nproc)
+make install
+
 wget -O postgresql.tar.bz2 "https://ftp.postgresql.org/pub/source/v$PG_VERSION/postgresql-$PG_VERSION.tar.bz2"
 mkdir -p /usr/src/postgresql
 tar -xf postgresql.tar.bz2 -C /usr/src/postgresql --strip-components 1
@@ -56,3 +66,8 @@ cd /usr/src/pgvector
 export PG_CONFIG=/usr/local/pg-build/bin/pg_config
 make -j
 make install
+
+cd /usr/local/pg-build
+find ./bin -type f \( -name "initdb" -o -name "pg_ctl" -o -name "postgres" \) -print0 | xargs -0 -n1 patchelf --set-rpath "\$ORIGIN/../lib"
+find ./lib -maxdepth 1 -type f -name "*.so*" -print0 | xargs -0 -n1 patchelf --set-rpath "\$ORIGIN"
+find ./lib/postgresql -maxdepth 1 -type f -name "*.so*" -print0 | xargs -0 -n1 patchelf --set-rpath "\$ORIGIN/.."
