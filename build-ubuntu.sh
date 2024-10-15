@@ -37,6 +37,7 @@ apt-get update && apt-get install -y --no-install-recommends \
     g++ \
     make \
     curl \
+    pkg-config \
     libc-dev \
     libicu-dev \
     libossp-uuid-dev \
@@ -44,7 +45,11 @@ apt-get update && apt-get install -y --no-install-recommends \
     libxslt1-dev \
     libssl-dev \
     libz-dev \
-    libperl-dev
+    libperl-dev \
+    python3-dev \
+    tcl-dev \
+    flex \
+    bison
 
 wget -O patchelf.tar.gz "https://nixos.org/releases/patchelf/patchelf-0.9/patchelf-0.9.tar.gz"
 mkdir -p /usr/src/patchelf
