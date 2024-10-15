@@ -6,7 +6,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        postgres: [17.0, 16.4, 15.8, 14.13, 13.16]
+        postgres: ["17.0", "16.4", "15.8", "14.13", "13.16"]
         os: [macos-13, macos-14]
     steps:
       - uses: actions/checkout@v4
