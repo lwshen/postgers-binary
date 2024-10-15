@@ -7,6 +7,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          - postgres: 17.0
+            os: ubuntu-24.04
           - postgres: 16.4
             os: ubuntu-24.04
           - postgres: 15.8
