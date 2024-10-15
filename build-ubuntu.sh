@@ -77,14 +77,15 @@ cd /usr/src/postgresql
     --with-python \
     --with-tcl \
     --without-readline
-make -j
-make install
+make -j$(nproc) world-bin
+make install-world-bin
+make -C contrib install
 
 mkdir -p /usr/src/pgvector
 curl -sL "https://github.com/pgvector/pgvector/archive/refs/tags/v$PGVECTOR_VERSION.tar.gz" | tar -xzf - -C /usr/src/pgvector --strip-components 1
 cd /usr/src/pgvector
 export PG_CONFIG=/usr/local/pg-build/bin/pg_config
-make -j
+make -j$(nproc)
 make install
 
 cd /usr/local/pg-build
