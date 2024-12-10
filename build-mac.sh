@@ -21,8 +21,6 @@ fi
 
 echo "Starting building postgres binaries"
 
-brew install patchelf
-
 wget -O postgresql.tar.bz2 "https://ftp.postgresql.org/pub/source/v$PG_VERSION/postgresql-$PG_VERSION.tar.bz2"
 mkdir -p /Users/runner/local/postgresql
 tar -xf postgresql.tar.bz2 -C /Users/runner/local/postgresql --strip-components 1
@@ -39,10 +37,11 @@ make -C contrib install
 mkdir -p /Users/runner/local/pgvector
 curl -sL "https://github.com/pgvector/pgvector/archive/refs/tags/v$PGVECTOR_VERSION.tar.gz" | tar -xzf - -C /Users/runner/local/pgvector --strip-components 1
 cd /Users/runner/local/pgvector
+export PG_CONFIG=/Users/runner/build/pg-build/bin/pg_config
 make -j$(sysctl -n hw.physicalcpu) OPTFLAGS=""
-PG_CONFIG=/Users/runner/build/pg-build/bin/pg_config make install
+make install
 
 cd /Users/runner/build/pg-build
-find ./bin -type f \( -name "initdb" -o -name "pg_ctl" -o -name "postgres" \) -print0 | xargs -0 -n1 patchelf --set-rpath "\$ORIGIN/../lib"
-find ./lib -maxdepth 1 -type f -name "*.so*" -print0 | xargs -0 -n1 patchelf --set-rpath "\$ORIGIN"
-find ./lib/postgresql -maxdepth 1 -type f -name "*.so*" -print0 | xargs -0 -n1 patchelf --set-rpath "\$ORIGIN/.."
+ls -al ./bin
+ls -al ./lib
+ls -al ./lib/postgresql
