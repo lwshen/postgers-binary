@@ -21,15 +21,16 @@ fi
 
 echo "Starting building postgres binaries"
 
-wget -O patchelf.tar.gz "https://nixos.org/releases/patchelf/patchelf-0.9/patchelf-0.9.tar.gz"
-mkdir -p /Users/runner/local/patchelf
-tar -xf patchelf.tar.gz -C /Users/runner/local/patchelf --strip-components 1
-cd /Users/runner/local/patchelf
-wget -O config.guess "https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=b8ee5f79949d1d40e8820a774d813660e1be52d3"
-wget -O config.sub "https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=b8ee5f79949d1d40e8820a774d813660e1be52d3"
-./configure --prefix=/usr/local
-make -j$(sysctl -n hw.physicalcpu)
-make install
+# wget -O patchelf.tar.gz "https://nixos.org/releases/patchelf/patchelf-0.9/patchelf-0.9.tar.gz"
+# mkdir -p /Users/runner/local/patchelf
+# tar -xf patchelf.tar.gz -C /Users/runner/local/patchelf --strip-components 1
+# cd /Users/runner/local/patchelf
+# wget -O config.guess "https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.guess;hb=b8ee5f79949d1d40e8820a774d813660e1be52d3"
+# wget -O config.sub "https://git.savannah.gnu.org/gitweb/?p=config.git;a=blob_plain;f=config.sub;hb=b8ee5f79949d1d40e8820a774d813660e1be52d3"
+# ./configure --prefix=/usr/local
+# make -j$(sysctl -n hw.physicalcpu)
+# make install
+brew install patchelf
 
 wget -O postgresql.tar.bz2 "https://ftp.postgresql.org/pub/source/v$PG_VERSION/postgresql-$PG_VERSION.tar.bz2"
 mkdir -p /Users/runner/local/postgresql
