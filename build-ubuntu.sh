@@ -1,15 +1,12 @@
 #!/bin/bash
 set -ex
 
-LITE_OPT=false
 PGVECTOR_VERSION=0.7.4
 
 while getopts "v:i:g:o:e:l" opt; do
     case $opt in
     v) PG_VERSION=$OPTARG ;;
-    o) DOCKER_OPTS=$OPTARG ;;
     e) PGVECTOR_VERSION=$OPTARG ;;
-    l) LITE_OPT=true ;;
     \?) exit 1 ;;
     esac
 done
@@ -17,11 +14,6 @@ done
 if [ -z "$PG_VERSION" ] ; then
   echo "Postgres version parameter is required!" && exit 1;
 fi
-if echo "$PG_VERSION" | grep -q '^9\.' && [ "$LITE_OPT" = true ] ; then
-  echo "Lite option is supported only for PostgreSQL 10 or later!" && exit 1;
-fi
-
-ICU_ENABLED=$(echo "$PG_VERSION" | grep -qv '^9\.' && [ "$LITE_OPT" != true ] && echo true || echo false);
 
 TRG_DIR=$PWD/bundle
 mkdir -p $TRG_DIR

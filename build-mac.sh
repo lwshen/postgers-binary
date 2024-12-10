@@ -1,7 +1,6 @@
 #!/bin/bash
 set -ex
 
-LITE_OPT=false
 PGVECTOR_VERSION=0.7.4
 
 while getopts "v:i:g:o:e:l" opt; do
