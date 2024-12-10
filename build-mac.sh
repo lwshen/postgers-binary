@@ -40,8 +40,3 @@ cd /Users/runner/local/pgvector
 export PG_CONFIG=/Users/runner/build/pg-build/bin/pg_config
 make -j$(sysctl -n hw.physicalcpu) OPTFLAGS=""
 make install
-
-cd /Users/runner/build/pg-build
-ls -al ./bin
-ls -al ./lib
-ls -al ./lib/postgresql
