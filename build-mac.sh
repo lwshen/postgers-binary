@@ -1,7 +1,7 @@
 #!/bin/bash
 set -ex
 
-PGVECTOR_VERSION=0.7.4
+PGVECTOR_VERSION=0.8.0
 
 while getopts "v:i:g:o:e:l" opt; do
     case $opt in
